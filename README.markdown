@@ -3,7 +3,9 @@ Stuff to do:
   - add Microposts
   - limit posts to 140 bytes
   - connect users and posts
-
+  - figure out how to get markdown to format more nicely
+  - figure out how to get the navigator helper to render properly and
+    use it
 
 Workflow
 
