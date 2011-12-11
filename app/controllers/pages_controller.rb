@@ -16,3 +16,11 @@ class PagesController < ApplicationController
   end
 
 end
+
+def link_away(text, path)
+  if @title == text
+    text
+  else
+    link_to text, path
+  end
+end
