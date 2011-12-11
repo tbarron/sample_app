@@ -17,10 +17,10 @@ class PagesController < ApplicationController
 
 end
 
-def link_away(text, path, attr = {})
-  if (@title == text) || (@title == attr[:title])
-    text
-  else
-    link_to text, path
-  end
-end
+# def link_away(text, path, attr = {})
+#   if (@title == text) || (@title == attr[:title])
+#     text
+#   else
+#     link_to text, path
+#   end
+# end

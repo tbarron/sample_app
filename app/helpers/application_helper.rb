@@ -10,21 +10,18 @@ module ApplicationHelper
     end
   end
 
-  # Return navigator line with current page unlinked
-  def navigator
-    links = Array.new
-    links = ['About', 'Contact', 'Home', 'Help']
-    nav = ""
-    sep = ""
-    for link in links
-      if link == @title
-        nav += sep + link
-      else
-        nav += sep + '<a href="' + link.downcase + '">' + link + '</a>'
-      end
-      sep = " | "
+  # Return the image tag for the logo
+  def logo
+    image_tag("logo.png", :alt => "Learning RoR", :class => "round")
+  end
+
+  # Format a link so that if it points to the current page, it's inactive
+  def link_away(text, path, attr = {})
+    if (@title == text) || (@title == attr[:title])
+      text
+    else
+      link_to text, path
     end
-    return nav
   end
 
 end
