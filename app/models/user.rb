@@ -5,6 +5,8 @@
 #  id         :integer         not null, primary key
 #  name       :string(255)
 #  email      :string(255)
+#  password   :string(255)     virtual
+#  encrypted_password :string(255)
 #  created_at :datetime
 #  updated_at :datetime
 #
@@ -23,4 +25,16 @@ class User < ActiveRecord::Base
   validates :password, :presence     => true,
                        :confirmation => true,
                        :length       => { :within => 6..40 }
+
+  before_save  :encrypt_password
+
+  private
+
+    def encrypt_password
+      self.encrypted_password = encrypt(self.password)
+    end
+
+    def encrypt(string)
+      string # !@! temporary
+    end
 end
