@@ -8,4 +8,14 @@ class UsersController < ApplicationController
     @user = User.new
     @title = "Register"
   end
+
+  def create
+    @user = User.new(params[:user])
+    if @user.save
+      # handle a successful save.
+    else
+      @title = "Register"
+      render 'new'
+    end
+  end
 end
