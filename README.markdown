@@ -11,23 +11,23 @@ Setup
 
  1. initialize project (rails new <appname> [-T])
 
- 1. edit Gemfile<br>
-	bundle install
+ 1. edit Gemfile  
+    bundle install
 
  1. rails generate rspec:install
 
- 1. git init<br>
-	git add .<br>
-	git commit -m 'Starting up'
+ 1. git init  
+    git add .  
+    git commit -m 'Starting up'
 
  1. Update README
 
- 1. Set up github repo (optional)<br>
-	git remote add original git@github.com:<username>/<appname>.git<br>
-	git push origin master
+ 1. Set up github repo (optional)  
+    git remote add original git@github.com:<username>/<appname>.git  
+    git push origin master
 
- 1. heroku create (optional)<br>
-	git push heroku master
+ 1. heroku create (optional)  
+    git push heroku master
 
 Workflow
 
@@ -39,10 +39,10 @@ Workflow
 
  1. git commit -a
     
- 1. git checkout master
-    git merge branchname
-    git push
-    git push heroku
+ 1. git checkout master  
+    git merge branchname  
+    git push  
+    git push heroku  
     [test feature at heroku]
 
  1. git checkout devel
