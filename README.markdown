@@ -1,10 +1,12 @@
 Stuff to do:
   + add Users  
+  + enable Users to register  
+  - enable Users to sign in  
   - add Microposts  
   - limit posts to 140 bytes  
   - connect users and posts  
-  - figure out how to get markdown to format more nicely  
-  - figure out how to get the navigator helper to render properly and  
+  + figure out how to get markdown to format more nicely  
+  + figure out how to get the navigator helper to render properly and  
     use it
 
 Setup
@@ -23,7 +25,7 @@ Setup
  1. Update README
 
  1. Set up github repo (optional)  
-    git remote add original git@github.com:<username>/<appname>.git  
+    git remote add origin git@github.com:<username>/<appname>.git  
     git push origin master
 
  1. heroku create (optional)  
