@@ -3,6 +3,7 @@ require 'spec_helper'
 describe UsersController do
   render_views
 
+  # ---------------------------------------------------------------------
   describe "GET :show" do
     before(:each) do
       @user = Factory(:user)
@@ -34,6 +35,7 @@ describe UsersController do
     end
   end
 
+  # ---------------------------------------------------------------------
   describe "GET :new" do
     it "should be successful" do
       get :new
@@ -44,8 +46,33 @@ describe UsersController do
       get :new
       response.should have_selector("title", :content => "Register")
     end
+
+    it "should have a name field" do
+      get :new
+      hsa = "input[name='user[name]'][type='text']"
+      response.should have_selector(hsa)
+    end
+
+    it "should have an email field" do
+      get :new
+      hsa = "input[name='user[email]'][type='text']"
+      response.should have_selector(hsa)
+    end
+
+    it "should have a password field" do
+      get :new
+      hsa = "input[name='user[password]'][type='password']"
+      response.should have_selector(hsa)
+    end
+
+    it "should have a password confirmation field" do
+      get :new
+      hsa = "input[name='user[password_confirmation]'][type='password']"
+      response.should have_selector(hsa)
+    end
   end
 
+  # ---------------------------------------------------------------------
   describe "POST :create" do
     describe "failure" do
       before(:each) do
@@ -69,6 +96,22 @@ describe UsersController do
       it "should render the 'new' page" do
         post :create, :user => @attr
         response.should render_template('new')
+      end
+
+      it "should clear the password field" do
+        post :create, :user => @attr.merge(:password => "foobar")
+        response.should have_selector("input", 
+                                      :name => "user[password]",
+                                      :value => "")
+        
+      end
+
+      it "should clear the password confirmation field" do
+        post :create, :user => @attr.merge(:password_confirmation => "foobar")
+        response.should have_selector("input", 
+                                      :name => "user[password_confirmation]",
+                                      :value => "")
+        
       end
     end
 
