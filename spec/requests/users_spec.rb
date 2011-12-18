@@ -40,10 +40,9 @@ describe "Users" do
         visit signin_path
         fill_in :email,      :with => ""
         fill_in :password,   :with => ""
-        click_button
-        # click_button "Sign In" # !@! if the above doesn't work try this
+        click_button "Sign In"
         response.should have_selector("div.flash.error", 
-                                      :content => "Invalid")
+                                      :content => "Invalid") 
       end
     end
 
@@ -53,8 +52,7 @@ describe "Users" do
         visit signin_path
         fill_in :email,       :with => user.email
         fill_in :password,    :with => user.password
-        click_button
-        # click_button "Sign In" # !@! may need this
+        click_button "Sign In"
         controller.should be_signed_in
         click_link "Sign Out"
         controller.should_not be_signed_in
