@@ -12,13 +12,14 @@ class UsersController < ApplicationController
   def create
     @user = User.new(params[:user])
     if @user.save
+      sign_in @user
       flash[:success] = "Welcome to the Sample App!"
       redirect_to @user
     else
       @title = "Register"
       @user.password = ""
       @user.password_confirmation = ""
-      render 'new'
+      render 'new'  # !@! would :new work here?
     end
   end
 end

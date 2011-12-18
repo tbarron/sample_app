@@ -1,7 +1,8 @@
 Stuff to do:
   + add Users  
   + enable Users to register  
-  - enable Users to sign in  
+  + enable Users to sign in  
+  - enable Users to sign out
   - add Microposts  
   - limit posts to 140 bytes  
   - connect users and posts  
