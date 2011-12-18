@@ -1,6 +1,20 @@
 module SessionsHelper
+
+  @@persistence = false
+
+  def persistence?
+    @@persistence
+  end
+
+  # ----------------------------------------------------------------------
   def sign_in(user)
-    cookies.permanent.signed[:remember_token] = [user.id, user.salt]
+    if @@persistence
+      cookies.permanent.signed[:remember_token] = [user.id, user.salt]
+      File.open("/tmp/cookies.txt", 'w') {|f| f.write(cookies.to_s)}
+    else
+      session[:current_user_id] = user.id
+      File.open("/tmp/cookies.txt", 'w') {|f| f.write(cookies.to_s)}
+    end
     self.current_user = user
   end
 
@@ -9,7 +23,11 @@ module SessionsHelper
   end
 
   def current_user
-    @current_user ||= user_from_remember_token
+    if @@persistence
+      @current_user ||= user_from_remember_token
+    else
+      @current_user ||= session[:current_user_id] && User.find_by_id(session[:current_user_id])
+    end
   end
 
   def signed_in?
@@ -17,7 +35,11 @@ module SessionsHelper
   end
 
   def sign_out
-    cookies.delete(:remember_token)
+    if @@persistence
+      cookies.delete(:remember_token)
+    else
+      session[:current_user_id] = nil
+    end
     self.current_user = nil
   end
 
