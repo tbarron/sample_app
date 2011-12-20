@@ -159,7 +159,7 @@ describe UsersController do
 
     it "should have the right title" do
       get :edit, :id => @user
-      response.should have_selector("title", :content => "Edit user")
+      response.should have_selector("title", :content => "Edit User")
     end
 
     it "should have a link to change the Gravatar" do
@@ -218,6 +218,41 @@ describe UsersController do
       it "should have a flash message" do
         put :update, :id => @user, :user => @attr
         flash[:success].should =~ /updated/
+      end
+    end
+  end
+
+  describe "authentication of edit/update pages" do
+    before(:each) do
+      @user = Factory(:user)
+    end
+
+    describe "for non-signed-in users" do
+      it "should deny access to :edit" do
+        get :edit, :id => @user
+        response.should redirect_to(signin_path)
+      end
+
+      it "should deny access to :update" do
+        put :update, :id => @user, :user => {}
+        response.should redirect_to(signin_path)
+      end
+    end
+
+    describe "for signed-in users" do
+      before(:each) do
+        wrong_user = Factory(:user, :email => "nonesuch@nowhere.com")
+        test_sign_in(wrong_user)
+      end
+
+      it "should require matching users for :edit" do
+        get :edit, :id => @user
+        response.should redirect_to(root_path)
+      end
+
+      it "should require matching users for :update" do
+        put :update, :id => @user, :user => {}
+        response.should redirect_to(root_path)
       end
     end
   end
