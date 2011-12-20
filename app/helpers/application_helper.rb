@@ -12,7 +12,10 @@ module ApplicationHelper
 
   # Return the image tag for the logo
   def logo
-    image_tag("logo.png", :alt => "Learning RoR", :class => "round")
+    image_tag("boulder.png", :width => "100", 
+                             :height => "75",
+                             :alt => "Learning RoR", 
+                             :class => "round")
   end
 
   # Format a link so that if it points to the current page, it's inactive
