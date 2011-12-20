@@ -41,9 +41,16 @@ module SessionsHelper
 
   # ----------------------------------------------------------------------
   def deny_access
+    remember_target
     redirect_to(signin_path, 
                 :notice => "Please sign in to access this page")
   end
+
+  # ----------------------------------------------------------------------
+  def redirect_back_or(default)
+    redirect_to(session[:target] || default)
+    forget_target
+  end  
 
   # ----------------------------------------------------------------------
   def signed_in?
@@ -71,5 +78,15 @@ module SessionsHelper
     # --------------------------------------------------------------------
     def remember_token
       cookies.signed[:remember_token] || [nil, nil]
+    end
+
+    # --------------------------------------------------------------------
+    def remember_target
+      session[:target] = request.fullpath
+    end
+
+    # --------------------------------------------------------------------
+    def forget_target
+      session[:target] = nil
     end
 end
