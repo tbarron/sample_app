@@ -2,10 +2,19 @@ Stuff to do:
   + add Users  
   + enable Users to register  
   + enable Users to sign in  
-  - enable Users to sign out
-  - add Microposts  
-  - limit posts to 140 bytes  
-  - connect users and posts  
+  + enable Users to sign out
+  + make the tab title be "Float'rs 'N Sink'rs"
+  - add a "delete this account" link to user profile page
+  - when users clicks "delete this account", should get a confirmation
+    dialog about how the operation is not reversible
+  - Need a way to get an admin user on the heroku deployment
+  - add bookmarks
+  - user can add bookmark
+  - user can delete bookmark
+  - add groups
+  - user can create a group
+  - user can add a bookmark to a group (a bookmark can be in multiple groups)
+  - user can remove a bookmark from a group
   + figure out how to get markdown to format more nicely  
   + figure out how to get the navigator helper to render properly and  
     use it

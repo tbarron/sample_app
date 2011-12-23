@@ -2,7 +2,8 @@ module ApplicationHelper
 
   # Return a page-specific title if @title defined, else generic title
   def title
-    base_title = "Learning Ruby on Rails"
+    # base_title = "Learning Ruby on Rails"
+    base_title = "Float'rs 'N Sink'rs"
     if @title.nil?
       return base_title
     else
