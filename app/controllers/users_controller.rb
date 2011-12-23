@@ -14,11 +14,13 @@ class UsersController < ApplicationController
   end
 
   def new
+    already_signed_in unless !signed_in?
     @user = User.new
     @title = "Register"
   end
 
   def create
+    already_signed_in unless !signed_in?
     @user = User.new(params[:user])
     if @user.save
       sign_in @user

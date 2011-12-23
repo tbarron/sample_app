@@ -58,6 +58,13 @@ module SessionsHelper
   end
 
   # ----------------------------------------------------------------------
+  def already_signed_in
+    flash[:info] = "You're already signed in. Please sign out before " +
+                   "trying to create a new account."
+    redirect_to(root_path)
+  end
+
+  # ----------------------------------------------------------------------
   def sign_out
     if @@persistence
       cookies.delete(:remember_token)

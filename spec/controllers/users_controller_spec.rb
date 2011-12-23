@@ -52,6 +52,48 @@ describe UsersController do
         # response.should have_selector("a", :href => "/users?page=2",
         #                                   :content => "Next")
       end
+
+      describe "for admin users" do
+        before(:each) do
+          @admin = Factory(:user, :email => "admin@example.com",
+                                  :name =>  "SuperUser",
+                                  :admin => true)
+          test_sign_in(@admin)
+        end
+
+        it "should show a delete link for each user" do
+          get :index
+          @users[0..5].each do |user|
+            response.should have_selector("a", 
+                                          :href => '/users/' + user.id.to_s, 
+                                          :content => "delete")
+          end
+        end
+
+        it "should not show a delete link for the admin" do
+          get :index, :page => 2
+          response.should have_selector("li", :content => @admin.name)
+          response.should_not have_selector("a", 
+                                            :content => "delete",
+                                            :href => '/users/' + 
+                                                     @admin.id.to_s)
+        end
+      end
+
+      describe "for unprivileged users" do
+        before(:each) do
+          user = Factory(:user, :email => "admin@example.com")
+          test_sign_in(user)
+        end
+
+        it "should not show a delete link for each user" do
+          get :index
+          @users[0..5].each do |user|
+            response.should_not have_selector("a", 
+                                              :content => "delete")
+          end
+        end
+      end
     end
   end
 
@@ -121,6 +163,19 @@ describe UsersController do
       get :new
       hsa = "input[name='user[password_confirmation]'][type='password']"
       response.should have_selector(hsa)
+    end
+
+    describe "for authenticated users" do
+      before(:each) do
+        @user = Factory(:user)
+        test_sign_in(@user)
+      end
+
+      it "should redirect to root url with a flashed message" do
+        get :new
+        response.should redirect_to(root_path)
+        flash[:info].should =~ /already signed in. Please sign out before/
+      end
     end
   end
 
@@ -194,6 +249,19 @@ describe UsersController do
       it "should have a welcome message" do
         post :create, :user => @attr
         flash[:success].should =~ /welcome to the sample app/i
+      end
+    end
+
+    describe "for authenticated users" do
+      before(:each) do
+        @user = Factory(:user)
+        test_sign_in(@user)
+      end
+
+      it "should redirect to root url" do
+        get :new
+        response.should redirect_to(root_path)
+        flash[:info].should =~ /already signed in. Please sign out before/
       end
     end
   end
