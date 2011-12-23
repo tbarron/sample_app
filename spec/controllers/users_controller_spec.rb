@@ -202,6 +202,7 @@ describe UsersController do
     before(:each) do
       @user = Factory(:user)
       test_sign_in(@user)
+      @gravatar_url = "http://gravatar.com/emails"
     end
 
     it "should be successful" do
@@ -216,9 +217,14 @@ describe UsersController do
 
     it "should have a link to change the Gravatar" do
       get :edit, :id => @user
-      gravatar_url = "http://gravatar.com/emails"
-      response.should have_selector("a", :href => gravatar_url,
+      response.should have_selector("a", :href => @gravatar_url,
                                          :content => "change")
+    end
+
+    it "should open the Gravatar page in a new window or tab" do
+      get :edit, :id => @user
+      response.should have_selector("a", :href => @gravatar_url,
+                                         :target => "_blank")
     end
   end
 
