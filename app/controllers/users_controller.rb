@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_filter :authenticate, :only => [:index, :edit, :update, :destroy]
+  before_filter :legal_user,   :only => :destroy
   before_filter :correct_user, :only => [:edit, :update]
-  before_filter :admin_user,   :only => :destroy
 
   def index
     @title = "All Users"
@@ -49,9 +49,17 @@ class UsersController < ApplicationController
   end
 
   def destroy
-    User.find(params[:id]).destroy
-    flash[:success] = "User destroyed."
-    redirect_to users_path
+    target = User.find(params[:id])
+    if current_user?(target)
+      sign_out
+      target.destroy
+      flash[:success] = "Your account has been deleted."
+      redirect_to root_path
+    else
+      User.find(params[:id]).destroy
+      flash[:success] = "User destroyed."
+      redirect_to users_path
+    end
   end
 
   private
@@ -67,5 +75,10 @@ class UsersController < ApplicationController
 
     def admin_user
       redirect_to(root_path) unless current_user.admin?
+    end
+
+    def legal_user
+      @user = User.find(params[:id])
+      redirect_to(root_path) unless (current_user.admin? || current_user?(@user))
     end
 end

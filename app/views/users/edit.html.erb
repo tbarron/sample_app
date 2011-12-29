@@ -3,7 +3,14 @@
 <%= form_for(@user) do |f| %>
   <%= render 'fields', :f => f %>
   <div class="actions">
-    <%= f.submit "Update" %><br />
+    <table><tr>
+      <td><%= f.submit "Update" %><br /></td>
+      <td><%= link_to "Delete this account", @user, 
+                      :method => :delete,
+                      :confirm => "This operation cannot be undone. " +
+                                  "Are you sure?",
+                      :title => "Delete #{@user.name}" %>
+    </tr></table>
   </div>
 <% end %>
 

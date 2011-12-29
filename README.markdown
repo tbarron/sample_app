@@ -4,11 +4,11 @@ Stuff to do:
   + enable Users to sign in  
   + enable Users to sign out
   + make the tab title be "Float'rs 'N Sink'rs"
-  - add a "delete this account" link to user profile page
-  - when users clicks "delete this account", should get a confirmation
+  + add a "delete this account" link to user edit/settings page
+  + when user clicks "delete this account", should get a confirmation
     dialog about how the operation is not reversible
   - Need a way to get an admin user on the heroku deployment
-  - add bookmarks
+  - add bookmarks (max length 4000?)
   - user can add bookmark
   - user can delete bookmark
   - add groups

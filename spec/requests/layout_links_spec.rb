@@ -66,5 +66,19 @@ describe "LayoutLinks" do
       response.should have_selector("a", :href => user_path(@user),
                                          :content => "Profile")
     end
+
+    it "should have a settings link" do
+      visit root_path
+      response.should have_selector("a", :href => user_path(@user) + "/edit",
+                                         :content => "Settings")
+    end
+
+    it "should have a working 'Delete account' link on the Settings page" do
+      visit root_path
+      click_link "Settings"
+      response.should have_selector("a", :content => "Delete this account")
+      click_link "Delete this account"
+      response.should be_success
+    end
   end
 end

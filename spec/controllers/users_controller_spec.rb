@@ -49,8 +49,8 @@ describe UsersController do
         response.should have_selector("span.disabled", :content => "Previous")
         response.should have_selector("a", :href => "/users?page=2",
                                            :content => "2")
-        # response.should have_selector("a", :href => "/users?page=2",
-        #                                   :content => "Next")
+        response.should have_selector("a", :href => "/users?page=2",
+                                           :content => "Next")
       end
 
       describe "for admin users" do
@@ -294,6 +294,12 @@ describe UsersController do
       response.should have_selector("a", :href => @gravatar_url,
                                          :target => "_blank")
     end
+
+    it "should have a 'delete this account' link" do
+      get :edit, :id => @user
+      response.should have_selector("a", 
+                                    :content => "Delete this account")
+    end
   end
 
   describe "PUT :update" do
@@ -393,6 +399,12 @@ describe UsersController do
         delete :destroy, :id => @user
         response.should redirect_to(signin_path)
       end
+
+      it "should not delete a record" do
+        lambda do
+          delete :destroy, :id => @user
+        end.should_not change(User, :count)
+      end
     end
 
     describe "as an unprivileged user" do
@@ -402,11 +414,19 @@ describe UsersController do
         response.should redirect_to(root_path)
       end
 
-      it "should not destroy a user" do   # mine
+      it "should allow user to delete self" do   # mine
         lambda do
           test_sign_in(@user)
           delete :destroy, :id => @user
-        end.should_not change(User, :count)
+        end.should change(User, :count).by(-1)
+      end
+
+      it "should not allow user to delete someone else" do   # mine
+        lambda do
+          test_sign_in(@user)
+          other = Factory(:user, :email => "yetanother@example.com")
+          delete :destroy, :id => other
+        end.should change(User, :count).by(1)
       end
     end
 

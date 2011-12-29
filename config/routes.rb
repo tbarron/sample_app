@@ -2,6 +2,14 @@ SampleApp::Application.routes.draw do
   get "sessions/new"
 
   resources :users
+  # GET /users           index    list of all item
+  # GET /users/new       new      return new user form
+  # POST /users          create   create a new user
+  # GET /users/:id       show     display a specific user
+  # GET /users/:id/edit  edit     return page for editing user
+  # PUT /users/:id       update   update specific user
+  # DELETE /users/:id    destroy  delete specific user
+  
   resources :sessions, :only => [:new, :create, :destroy]
 
   match '/register', :to => 'users#new'
